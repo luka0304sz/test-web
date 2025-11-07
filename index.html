@@ -1,211 +1,546 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Random Content Demo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reddit Posts Viewer</title>
   <style>
-    :root { --gap: 14px; --radius: 14px; }
-    * { box-sizing: border-box; }
-    body { margin: 0; font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0f1221; color:#e8e9f0; }
-    header { padding: 30px 20px; text-align: center; background: linear-gradient(135deg,#233,#324 60%,#435); }
-    header h1 { margin: 0 0 6px; font-size: 28px; }
-    header p { margin: 0; opacity: .85; }
-    main { max-width: 960px; margin: 24px auto 60px; padding: 0 16px; display: grid; gap: var(--gap); }
-    .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
-    .card { background: #161a2e; border: 1px solid #263051; border-radius: var(--radius); padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-    .card h2 { margin: 0 0 10px; font-size: 18px; letter-spacing:.2px; }
-    .muted { opacity: .8; }
-    .pill { display:inline-block; padding:6px 10px; border-radius: 999px; background:#1e2746; border:1px solid #2f3a63; font-size:12px; }
-    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    button { cursor:pointer; border:1px solid #2f3a63; background:#0e1530; color:#e8e9f0; padding:10px 14px; border-radius: 12px; font-weight:600; }
-    button:hover { background:#111a3a; }
-    img { max-width: 100%; border-radius: 12px; border:1px solid #2f3a63; display:block; }
-    table { width: 100%; border-collapse: collapse; background:#0f152d; }
-    th, td { padding:10px; border-bottom:1px solid #263051; text-align:left; }
-    .color-swatch { height: 44px; border-radius: 10px; border:1px solid #2f3a63; }
-    footer { text-align:center; padding: 24px; opacity:.7; }
-    code { background:#0e1530; padding:2px 6px; border-radius:6px; border:1px solid #2f3a63; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header .subtitle {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.2);
+      padding: 15px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-label {
+      font-size: 0.85em;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      font-size: 1.3em;
+      color: #667eea;
+    }
+
+    .error {
+      background-color: #fee;
+      border: 2px solid #fcc;
+      color: #c33;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .post {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .post:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .post-header {
+      margin-bottom: 15px;
+    }
+
+    .post-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .post-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .post-title a:hover {
+      color: #667eea;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 0.9em;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .score-badge {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85em;
+    }
+
+    .author {
+      color: #667eea;
+      font-weight: 600;
+    }
+
+    .post-text {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+      margin: 15px 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .post-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .post-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9em;
+      padding: 8px 16px;
+      border: 2px solid #667eea;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .post-link:hover {
+      background-color: #667eea;
+      color: white;
+    }
+
+    .comments-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    .comments-header {
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .comment-count {
+      background-color: #667eea;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+    }
+
+    .comment {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border-left: 3px solid #4CAF50;
+      transition: all 0.2s;
+    }
+
+    .comment:hover {
+      background-color: #f0f0f0;
+      transform: translateX(2px);
+    }
+
+    .comment.depth-0 {
+      border-left-color: #4CAF50;
+    }
+
+    .comment.depth-1 {
+      border-left-color: #2196F3;
+      margin-left: 20px;
+    }
+
+    .comment.depth-2 {
+      border-left-color: #FF9800;
+      margin-left: 40px;
+    }
+
+    .comment.depth-3 {
+      border-left-color: #E91E63;
+      margin-left: 60px;
+    }
+
+    .comment.depth-4 {
+      border-left-color: #9C27B0;
+      margin-left: 80px;
+    }
+
+    .comment-author {
+      font-weight: 700;
+      color: #4CAF50;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .comment-score {
+      background-color: #4CAF50;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    .comment-meta {
+      font-size: 0.85em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .comment-body {
+      color: #333;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.5;
+    }
+
+    .depth-indicator {
+      display: inline-block;
+      background-color: rgba(0,0,0,0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      .post {
+        padding: 15px;
+      }
+
+      .post-title {
+        font-size: 1.3em;
+      }
+
+      .comment.depth-1,
+      .comment.depth-2,
+      .comment.depth-3,
+      .comment.depth-4 {
+        margin-left: 15px;
+      }
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin-top: 10px;
+    }
+
+    .refresh-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .refresh-btn:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Random Content Demo</h1>
-    <p class="muted">A single HTML file that generates new content on each click.</p>
-  </header>
-
-  <main>
-    <div class="row" style="justify-content: space-between;">
-      <div class="row">
-        <span class="pill" id="seed-pill">seed: —</span>
-        <span class="pill" id="ts-pill">generated: —</span>
-      </div>
-      <div class="row">
-        <button id="regen">Regenerate</button>
-        <button id="copy">Copy JSON</button>
-      </div>
+  <div class="container">
+    <div class="header">
+      <h1>🚀 Reddit Posts Viewer</h1>
+      <div class="subtitle">Real-time Reddit data with comments and replies</div>
+      <button class="refresh-btn" onclick="fetchData()">🔄 Refresh Data</button>
     </div>
 
-    <section class="grid">
-      <article class="card">
-        <h2>Hero</h2>
-        <p id="hero-text" class="muted"></p>
-        <img id="hero-img" alt="Random scenic image" />
-      </article>
+    <div id="loading" class="loading">
+      <div>⏳ Loading Reddit posts...</div>
+    </div>
 
-      <article class="card">
-        <h2>User Profile</h2>
-        <div id="profile"></div>
-      </article>
+    <div id="error" class="error" style="display: none;"></div>
 
-      <article class="card">
-        <h2>Recent Tags</h2>
-        <div id="tags" class="row"></div>
-      </article>
-
-      <article class="card">
-        <h2>Random Colors</h2>
-        <div id="colors" class="grid"></div>
-      </article>
-
-      <article class="card">
-        <h2>Todo List</h2>
-        <ul id="todos"></ul>
-      </article>
-
-      <article class="card">
-        <h2>Metrics</h2>
-        <table id="metrics">
-          <thead><tr><th>Metric</th><th>Value</th><th>Δ 24h</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </article>
-
-      <article class="card">
-        <h2>Paragraphs</h2>
-        <p id="para1" class="muted"></p>
-        <p id="para2" class="muted"></p>
-      </article>
-
-      <article class="card">
-        <h2>Raw JSON</h2>
-        <pre id="json" style="white-space:pre-wrap;"></pre>
-      </article>
-    </section>
-  </main>
-
-  <footer>Built with plain HTML/CSS/JS. Refresh or press <code>Regenerate</code> for new content.</footer>
+    <div id="content"></div>
+  </div>
 
   <script>
-    // --- helpers ---
-    const rnd = (n=1) => crypto.getRandomValues(new Uint32Array(n));
-    const pick = (arr) => arr[Math.floor(rnd(1)[0] / 2**32 * arr.length)];
-    const randInt = (min, max) => Math.floor((rnd(1)[0] / 2**32) * (max - min + 1)) + min;
-    const shuffle = (arr) => arr.map(v=>[v, rnd(1)[0]]).sort((a,b)=>a[1]-b[1]).map(([v])=>v);
+    const API_URL = 'http://helper.lnservice.online/api/v1/reddit/fetch?subreddit=ClaudeAI&apiKey=secret&topPostsCount=25&maxComments=100&minimumCommentScore=1';
 
-    const WORDS = "lorem ipsum dolor amet quantum vector nebula aurora prisma delta nova alpine comet echo tempo pixel circuit synth cron terra lumen atlas kappa sigma zenith orbit photon astro byte kernel nexus vertex plasma quantum".split(" ");
-    const NAMES = ["Ava","Liam","Noah","Mia","Zoe","Kai","Ivy","Leo","Mila","Ezra","Nora","Eli","Luna","Ari","Nova","Odin","Jade","Theo","Iris","Sora"];
-    const DOMAINS = ["example.com","mail.test","dev.local","foo.bar","demo.app"];
-    const TAGS = ["design","api","release","bug","perf","security","docs","ux","data","cloud","edge","ai","ml","ops","db","billing","oncall","web","mobile","feature"];
-    const METRICS = ["Requests","Latency (ms)","Errors","Users","Throughput","Memory (MB)","CPU (%)","Cache Hit (%)"];
-
-    const sentence = (min=6, max=14) => {
-      const len = randInt(min, max);
-      const words = Array.from({length: len}, () => pick(WORDS));
-      words[0] = words[0][0].toUpperCase() + words[0].slice(1);
-      return words.join(" ") + ".";
-    };
-
-    const paragraph = (sents=randInt(2,4)) => Array.from({length:sents}, ()=>sentence()).join(" ");
-
-    const emailFor = (name) => name.toLowerCase() + "@" + pick(DOMAINS);
-    const phone = () => `+${randInt(1,99)} ${randInt(100,999)} ${randInt(100,999)} ${randInt(100,999)}`;
-    const hex = () => "#" + [...crypto.getRandomValues(new Uint8Array(3))].map(b=>b.toString(16).padStart(2,"0")).join("");
-
-    const pct = () => (Math.random()*2-1)*100|0; // -100..100 int
-    const imageUrl = () => `https://picsum.photos/seed/${rnd(1)[0]}/800/480`;
-
-    function generate() {
-      const seed = rnd(1)[0].toString(36);
-      const now = new Date();
-
-      // hero
-      document.getElementById("seed-pill").textContent = "seed: " + seed;
-      document.getElementById("ts-pill").textContent = "generated: " + now.toLocaleString();
-      document.getElementById("hero-text").textContent = sentence(10,16) + " " + sentence(6,10);
-      document.getElementById("hero-img").src = imageUrl();
-
-      // profile
-      const name = pick(NAMES) + " " + pick(["A.","B.","C.","D.","E."]) + " " + pick(["Smith","Khan","Ito","Nowak","Garcia","Dubois","Núñez","Silva","Hansen","Novak"]);
-      const profile = {
-        name,
-        title: pick(["Engineer","Designer","PM","Researcher","Analyst","Support","DevRel","SRE","Architect","Writer"]),
-        company: pick(["Acme Inc.","Globex","Umbrella","Initech","Hooli","Wayne Tech","Stark Industries"]),
-        email: emailFor(name.split(" ")[0]),
-        phone: phone(),
-        location: pick(["Berlin, DE","Warsaw, PL","Paris, FR","Lisbon, PT","Helsinki, FI","Oslo, NO","Madrid, ES"])
-      };
-      document.getElementById("profile").innerHTML = `
-        <div class="row"><strong>${profile.name}</strong><span class="pill">${profile.title}</span></div>
-        <p class="muted">${profile.company} • ${profile.location}</p>
-        <p><a href="mailto:${profile.email}">${profile.email}</a> • ${profile.phone}</p>
-      `;
-
-      // tags
-      const tagRoot = document.getElementById("tags");
-      tagRoot.innerHTML = "";
-      shuffle(TAGS).slice(10).forEach(t=>{
-        const s = document.createElement("span");
-        s.className = "pill";
-        s.textContent = t;
-        tagRoot.appendChild(s);
-      });
-
-      // colors
-      const colorRoot = document.getElementById("colors");
-      colorRoot.innerHTML = "";
-      Array.from({length:6}).forEach(()=>{
-        const c = hex();
-        const wrap = document.createElement("div");
-        wrap.className = "card";
-        wrap.innerHTML = `<div class="color-swatch" style="background:${c}"></div><p style="margin:8px 0 0;"><code>${c}</code></p>`;
-        colorRoot.appendChild(wrap);
-      });
-
-      // todos
-      const todos = document.getElementById("todos");
-      todos.innerHTML = "";
-      Array.from({length: randInt(4,8)}).forEach((_,i)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<input type="checkbox" ${Math.random()>.6?"checked":""} /> ${sentence(4,9)}`;
-        todos.appendChild(li);
-      });
-
-      // metrics
-      const tbody = document.querySelector("#metrics tbody");
-      tbody.innerHTML = "";
-      shuffle(METRICS).slice(6).forEach(m=>{
-        const value = randInt(10, 10000);
-        const delta = pct();
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${m}</td><td>${value.toLocaleString()}</td><td style="color:${delta>=0?"#69e36c":"#ff6b6b"}">${delta>0?"+":""}${delta}%</td>`;
-        tbody.appendChild(tr);
-      });
-
-      // paragraphs + json
-      document.getElementById("para1").textContent = paragraph();
-      document.getElementById("para2").textContent = paragraph();
-      const data = { seed, generatedAt: now.toISOString(), profile, tags: Array.from(tagRoot.querySelectorAll(".pill")).map(n=>n.textContent) };
-      document.getElementById("json").textContent = JSON.stringify(data, null, 2);
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
 
-    document.getElementById("regen").addEventListener("click", generate);
-    document.getElementById("copy").addEventListener("click", async () => {
-      const txt = document.getElementById("json").textContent;
-      try { await navigator.clipboard.writeText(txt); alert("JSON copied!"); } catch { alert("Copy failed."); }
-    });
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
 
-    generate();
+    function renderComment(comment, depth = 0) {
+      const depthClass = `depth-${Math.min(depth, 4)}`;
+      const depthIndicator = depth > 0 ? `<span class="depth-indicator">↳ Reply ${depth}</span>` : '';
+
+      let html = `
+        <div class="comment ${depthClass}">
+          <div class="comment-author">
+            <span>👤 u/${escapeHtml(comment.author)}</span>
+            <span class="comment-score">⬆ ${comment.score}</span>
+            ${depthIndicator}
+          </div>
+          <div class="comment-meta">
+            📅 ${formatDate(comment.created)}
+          </div>
+          <div class="comment-body">${escapeHtml(comment.body)}</div>
+        </div>
+      `;
+
+      // Recursively render replies
+      if (comment.replies && comment.replies.length > 0) {
+        comment.replies.forEach(reply => {
+          html += renderComment(reply, depth + 1);
+        });
+      }
+
+      return html;
+    }
+
+    function renderPost(post, index) {
+      const hasText = post.selftext && post.selftext.trim();
+      const hasComments = post.comments && post.comments.length > 0;
+
+      let html = `
+        <div class="post">
+          <div class="post-header">
+            <div class="post-title">
+              ${index + 1}. <a href="${post.url}" target="_blank">${escapeHtml(post.title)}</a>
+            </div>
+            <div class="post-meta">
+              <div class="meta-item">
+                <span class="score-badge">⬆ ${post.score} points</span>
+              </div>
+              <div class="meta-item">
+                <span>👤 <span class="author">u/${escapeHtml(post.author)}</span></span>
+              </div>
+              <div class="meta-item">
+                💬 ${post.numComments} comments
+              </div>
+              <div class="meta-item">
+                📅 ${formatDate(post.created)}
+              </div>
+            </div>
+          </div>
+
+          <div class="post-links">
+            <a href="${post.url}" target="_blank" class="post-link">🔗 View Content</a>
+            <a href="https://reddit.com${post.permalink}" target="_blank" class="post-link">💬 Reddit Thread</a>
+          </div>
+      `;
+
+      if (hasText) {
+        html += `
+          <div class="post-text">
+            ${escapeHtml(post.selftext)}
+          </div>
+        `;
+      }
+
+      if (hasComments) {
+        html += `
+          <div class="comments-section">
+            <div class="comments-header">
+              💬 Comments
+              <span class="comment-count">${post.comments.length}</span>
+            </div>
+        `;
+
+        post.comments.forEach(comment => {
+          html += renderComment(comment, 0);
+        });
+
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+      return html;
+    }
+
+    function renderData(data) {
+      const contentDiv = document.getElementById('content');
+
+      let html = `
+        <div class="header">
+          <h2>r/${data.subreddit}</h2>
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-label">Posts</div>
+              <div class="stat-value">${data.stats.returnedPosts}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Posts with Comments</div>
+              <div class="stat-value">${data.stats.postsWithComments}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Max Comments</div>
+              <div class="stat-value">${data.config.maxComments}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Min Score</div>
+              <div class="stat-value">${data.config.minimumCommentScore}</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Hours Back</div>
+              <div class="stat-value">${data.config.hoursBack}h</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Source</div>
+              <div class="stat-value">${data.fromCache ? '💾 Cache' : '🔥 Fresh'}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      data.posts.forEach((post, index) => {
+        html += renderPost(post, index);
+      });
+
+      contentDiv.innerHTML = html;
+    }
+
+    async function fetchData() {
+      const loadingDiv = document.getElementById('loading');
+      const errorDiv = document.getElementById('error');
+      const contentDiv = document.getElementById('content');
+
+      // Show loading
+      loadingDiv.style.display = 'block';
+      errorDiv.style.display = 'none';
+      contentDiv.innerHTML = '';
+
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || 'API returned error');
+        }
+
+        // Hide loading and render data
+        loadingDiv.style.display = 'none';
+        renderData(data);
+
+      } catch (error) {
+        loadingDiv.style.display = 'none';
+        errorDiv.style.display = 'block';
+        errorDiv.innerHTML = `
+          <strong>❌ Error loading data:</strong><br>
+          ${escapeHtml(error.message)}
+          <br><br>
+          <button class="refresh-btn" onclick="fetchData()">🔄 Try Again</button>
+        `;
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    // Fetch data on page load
+    fetchData();
   </script>
 </body>
 </html>
