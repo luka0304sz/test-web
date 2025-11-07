@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Random Content Demo</title>
+  <style>
+    :root { --gap: 14px; --radius: 14px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0f1221; color:#e8e9f0; }
+    header { padding: 30px 20px; text-align: center; background: linear-gradient(135deg,#233,#324 60%,#435); }
+    header h1 { margin: 0 0 6px; font-size: 28px; }
+    header p { margin: 0; opacity: .85; }
+    main { max-width: 960px; margin: 24px auto 60px; padding: 0 16px; display: grid; gap: var(--gap); }
+    .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+    .card { background: #161a2e; border: 1px solid #263051; border-radius: var(--radius); padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card h2 { margin: 0 0 10px; font-size: 18px; letter-spacing:.2px; }
+    .muted { opacity: .8; }
+    .pill { display:inline-block; padding:6px 10px; border-radius: 999px; background:#1e2746; border:1px solid #2f3a63; font-size:12px; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    button { cursor:pointer; border:1px solid #2f3a63; background:#0e1530; color:#e8e9f0; padding:10px 14px; border-radius: 12px; font-weight:600; }
+    button:hover { background:#111a3a; }
+    img { max-width: 100%; border-radius: 12px; border:1px solid #2f3a63; display:block; }
+    table { width: 100%; border-collapse: collapse; background:#0f152d; }
+    th, td { padding:10px; border-bottom:1px solid #263051; text-align:left; }
+    .color-swatch { height: 44px; border-radius: 10px; border:1px solid #2f3a63; }
+    footer { text-align:center; padding: 24px; opacity:.7; }
+    code { background:#0e1530; padding:2px 6px; border-radius:6px; border:1px solid #2f3a63; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Random Content Demo</h1>
+    <p class="muted">A single HTML file that generates new content on each click.</p>
+  </header>
+
+  <main>
+    <div class="row" style="justify-content: space-between;">
+      <div class="row">
+        <span class="pill" id="seed-pill">seed: —</span>
+        <span class="pill" id="ts-pill">generated: —</span>
+      </div>
+      <div class="row">
+        <button id="regen">Regenerate</button>
+        <button id="copy">Copy JSON</button>
+      </div>
+    </div>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Hero</h2>
+        <p id="hero-text" class="muted"></p>
+        <img id="hero-img" alt="Random scenic image" />
+      </article>
+
+      <article class="card">
+        <h2>User Profile</h2>
+        <div id="profile"></div>
+      </article>
+
+      <article class="card">
+        <h2>Recent Tags</h2>
+        <div id="tags" class="row"></div>
+      </article>
+
+      <article class="card">
+        <h2>Random Colors</h2>
+        <div id="colors" class="grid"></div>
+      </article>
+
+      <article class="card">
+        <h2>Todo List</h2>
+        <ul id="todos"></ul>
+      </article>
+
+      <article class="card">
+        <h2>Metrics</h2>
+        <table id="metrics">
+          <thead><tr><th>Metric</th><th>Value</th><th>Δ 24h</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+
+      <article class="card">
+        <h2>Paragraphs</h2>
+        <p id="para1" class="muted"></p>
+        <p id="para2" class="muted"></p>
+      </article>
+
+      <article class="card">
+        <h2>Raw JSON</h2>
+        <pre id="json" style="white-space:pre-wrap;"></pre>
+      </article>
+    </section>
+  </main>
+
+  <footer>Built with plain HTML/CSS/JS. Refresh or press <code>Regenerate</code> for new content.</footer>
+
+  <script>
+    // --- helpers ---
+    const rnd = (n=1) => crypto.getRandomValues(new Uint32Array(n));
+    const pick = (arr) => arr[Math.floor(rnd(1)[0] / 2**32 * arr.length)];
+    const randInt = (min, max) => Math.floor((rnd(1)[0] / 2**32) * (max - min + 1)) + min;
+    const shuffle = (arr) => arr.map(v=>[v, rnd(1)[0]]).sort((a,b)=>a[1]-b[1]).map(([v])=>v);
+
+    const WORDS = "lorem ipsum dolor amet quantum vector nebula aurora prisma delta nova alpine comet echo tempo pixel circuit synth cron terra lumen atlas kappa sigma zenith orbit photon astro byte kernel nexus vertex plasma quantum".split(" ");
+    const NAMES = ["Ava","Liam","Noah","Mia","Zoe","Kai","Ivy","Leo","Mila","Ezra","Nora","Eli","Luna","Ari","Nova","Odin","Jade","Theo","Iris","Sora"];
+    const DOMAINS = ["example.com","mail.test","dev.local","foo.bar","demo.app"];
+    const TAGS = ["design","api","release","bug","perf","security","docs","ux","data","cloud","edge","ai","ml","ops","db","billing","oncall","web","mobile","feature"];
+    const METRICS = ["Requests","Latency (ms)","Errors","Users","Throughput","Memory (MB)","CPU (%)","Cache Hit (%)"];
+
+    const sentence = (min=6, max=14) => {
+      const len = randInt(min, max);
+      const words = Array.from({length: len}, () => pick(WORDS));
+      words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+      return words.join(" ") + ".";
+    };
+
+    const paragraph = (sents=randInt(2,4)) => Array.from({length:sents}, ()=>sentence()).join(" ");
+
+    const emailFor = (name) => name.toLowerCase() + "@" + pick(DOMAINS);
+    const phone = () => `+${randInt(1,99)} ${randInt(100,999)} ${randInt(100,999)} ${randInt(100,999)}`;
+    const hex = () => "#" + [...crypto.getRandomValues(new Uint8Array(3))].map(b=>b.toString(16).padStart(2,"0")).join("");
+
+    const pct = () => (Math.random()*2-1)*100|0; // -100..100 int
+    const imageUrl = () => `https://picsum.photos/seed/${rnd(1)[0]}/800/480`;
+
+    function generate() {
+      const seed = rnd(1)[0].toString(36);
+      const now = new Date();
+
+      // hero
+      document.getElementById("seed-pill").textContent = "seed: " + seed;
+      document.getElementById("ts-pill").textContent = "generated: " + now.toLocaleString();
+      document.getElementById("hero-text").textContent = sentence(10,16) + " " + sentence(6,10);
+      document.getElementById("hero-img").src = imageUrl();
+
+      // profile
+      const name = pick(NAMES) + " " + pick(["A.","B.","C.","D.","E."]) + " " + pick(["Smith","Khan","Ito","Nowak","Garcia","Dubois","Núñez","Silva","Hansen","Novak"]);
+      const profile = {
+        name,
+        title: pick(["Engineer","Designer","PM","Researcher","Analyst","Support","DevRel","SRE","Architect","Writer"]),
+        company: pick(["Acme Inc.","Globex","Umbrella","Initech","Hooli","Wayne Tech","Stark Industries"]),
+        email: emailFor(name.split(" ")[0]),
+        phone: phone(),
+        location: pick(["Berlin, DE","Warsaw, PL","Paris, FR","Lisbon, PT","Helsinki, FI","Oslo, NO","Madrid, ES"])
+      };
+      document.getElementById("profile").innerHTML = `
+        <div class="row"><strong>${profile.name}</strong><span class="pill">${profile.title}</span></div>
+        <p class="muted">${profile.company} • ${profile.location}</p>
+        <p><a href="mailto:${profile.email}">${profile.email}</a> • ${profile.phone}</p>
+      `;
+
+      // tags
+      const tagRoot = document.getElementById("tags");
+      tagRoot.innerHTML = "";
+      shuffle(TAGS).slice(10).forEach(t=>{
+        const s = document.createElement("span");
+        s.className = "pill";
+        s.textContent = t;
+        tagRoot.appendChild(s);
+      });
+
+      // colors
+      const colorRoot = document.getElementById("colors");
+      colorRoot.innerHTML = "";
+      Array.from({length:6}).forEach(()=>{
+        const c = hex();
+        const wrap = document.createElement("div");
+        wrap.className = "card";
+        wrap.innerHTML = `<div class="color-swatch" style="background:${c}"></div><p style="margin:8px 0 0;"><code>${c}</code></p>`;
+        colorRoot.appendChild(wrap);
+      });
+
+      // todos
+      const todos = document.getElementById("todos");
+      todos.innerHTML = "";
+      Array.from({length: randInt(4,8)}).forEach((_,i)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<input type="checkbox" ${Math.random()>.6?"checked":""} /> ${sentence(4,9)}`;
+        todos.appendChild(li);
+      });
+
+      // metrics
+      const tbody = document.querySelector("#metrics tbody");
+      tbody.innerHTML = "";
+      shuffle(METRICS).slice(6).forEach(m=>{
+        const value = randInt(10, 10000);
+        const delta = pct();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${m}</td><td>${value.toLocaleString()}</td><td style="color:${delta>=0?"#69e36c":"#ff6b6b"}">${delta>0?"+":""}${delta}%</td>`;
+        tbody.appendChild(tr);
+      });
+
+      // paragraphs + json
+      document.getElementById("para1").textContent = paragraph();
+      document.getElementById("para2").textContent = paragraph();
+      const data = { seed, generatedAt: now.toISOString(), profile, tags: Array.from(tagRoot.querySelectorAll(".pill")).map(n=>n.textContent) };
+      document.getElementById("json").textContent = JSON.stringify(data, null, 2);
+    }
+
+    document.getElementById("regen").addEventListener("click", generate);
+    document.getElementById("copy").addEventListener("click", async () => {
+      const txt = document.getElementById("json").textContent;
+      try { await navigator.clipboard.writeText(txt); alert("JSON copied!"); } catch { alert("Copy failed."); }
+    });
+
+    generate();
+  </script>
+</body>
+</html>
