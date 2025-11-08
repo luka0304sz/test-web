@@ -13,260 +13,308 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: #fafafa;
       color: #333;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 16px;
     }
 
     .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 30px;
-      border-radius: 12px;
-      margin-bottom: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      background: white;
+      border: 1px solid #e0e0e0;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     .header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      font-weight: 700;
+      font-size: 1.5em;
+      margin-bottom: 4px;
+      font-weight: 600;
+      color: #1a1a1a;
     }
 
     .header .subtitle {
-      font-size: 1.1em;
-      opacity: 0.9;
+      font-size: 0.85em;
+      color: #666;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin: 12px 0 0 0;
     }
 
     .stat-card {
-      background: rgba(255,255,255,0.2);
-      padding: 15px;
-      border-radius: 8px;
-      backdrop-filter: blur(10px);
+      background: #f5f5f5;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #e8e8e8;
     }
 
     .stat-label {
-      font-size: 0.85em;
-      opacity: 0.8;
+      font-size: 0.7em;
+      color: #888;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
 
     .stat-value {
-      font-size: 1.8em;
-      font-weight: 700;
-      margin-top: 5px;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-top: 2px;
+      color: #333;
     }
 
     .loading {
       text-align: center;
-      padding: 60px 20px;
-      font-size: 1.3em;
-      color: #667eea;
+      padding: 40px 16px;
+      font-size: 0.95em;
+      color: #666;
     }
 
     .error {
-      background-color: #fee;
-      border: 2px solid #fcc;
+      background-color: #fff5f5;
+      border: 1px solid #fdd;
       color: #c33;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 20px 0;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.9em;
     }
 
     .post {
       background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
 
     .post:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      border-color: #d0d0d0;
     }
 
     .post-header {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .post-title {
-      font-size: 1.8em;
-      font-weight: 700;
-      color: #2c3e50;
-      margin-bottom: 10px;
-      line-height: 1.3;
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 6px;
     }
 
-    .post-title a {
+    .post-title-text {
+      flex: 1;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.4;
+    }
+
+    .post-title-text a {
       color: inherit;
       text-decoration: none;
     }
 
-    .post-title a:hover {
-      color: #667eea;
+    .post-title-text a:hover {
+      color: #0066cc;
     }
 
     .post-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
-      font-size: 0.9em;
+      gap: 10px;
+      font-size: 0.8em;
       color: #666;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .meta-item {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
     .score-badge {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 600;
+      background: #f0f0f0;
+      color: #333;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
       font-size: 0.85em;
+      border: 1px solid #e0e0e0;
     }
 
     .author {
-      color: #667eea;
-      font-weight: 600;
+      color: #0066cc;
+      font-weight: 500;
     }
 
     .post-text {
-      background-color: #f9f9f9;
-      padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid #667eea;
-      margin: 15px 0;
+      background-color: #f8f8f8;
+      padding: 12px;
+      border-radius: 4px;
+      border-left: 3px solid #ddd;
+      margin: 10px 0;
       white-space: pre-wrap;
       word-wrap: break-word;
+      font-size: 0.9em;
+      line-height: 1.5;
     }
 
     .post-links {
       display: flex;
-      gap: 15px;
-      margin-top: 15px;
+      gap: 8px;
+      margin-top: 10px;
     }
 
     .post-link {
-      color: #667eea;
+      color: #0066cc;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9em;
-      padding: 8px 16px;
-      border: 2px solid #667eea;
-      border-radius: 6px;
-      transition: all 0.2s;
+      font-weight: 500;
+      font-size: 0.8em;
+      padding: 4px 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      transition: all 0.15s;
+      background: #fafafa;
     }
 
     .post-link:hover {
-      background-color: #667eea;
-      color: white;
+      background-color: #f0f0f0;
+      border-color: #d0d0d0;
     }
 
     .comments-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 2px solid #e0e0e0;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e8e8e8;
     }
 
     .comments-header {
-      font-size: 1.4em;
-      font-weight: 700;
-      color: #2c3e50;
-      margin-bottom: 20px;
+      font-size: 0.95em;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
     }
 
     .comment-count {
-      background-color: #667eea;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.7em;
+      background-color: #f0f0f0;
+      color: #666;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 0.75em;
+      border: 1px solid #e0e0e0;
     }
 
     .comment {
-      background-color: #f9f9f9;
-      padding: 15px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border-left: 3px solid #4CAF50;
-      transition: all 0.2s;
+      background-color: #fafafa;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      font-size: 0.95em;
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .comment::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #ddd;
     }
 
     .comment:hover {
-      background-color: #f0f0f0;
-      transform: translateX(2px);
+      background-color: #f5f5f5;
     }
 
-    .comment.depth-0 {
-      border-left-color: #4CAF50;
+    .comment.depth-0::before {
+      background-color: #888;
     }
 
     .comment.depth-1 {
-      border-left-color: #2196F3;
-      margin-left: 20px;
+      margin-left: 12px;
+    }
+
+    .comment.depth-1::before {
+      background-color: #999;
     }
 
     .comment.depth-2 {
-      border-left-color: #FF9800;
-      margin-left: 40px;
+      margin-left: 24px;
+    }
+
+    .comment.depth-2::before {
+      background-color: #aaa;
     }
 
     .comment.depth-3 {
-      border-left-color: #E91E63;
-      margin-left: 60px;
+      margin-left: 32px;
+    }
+
+    .comment.depth-3::before {
+      background-color: #bbb;
     }
 
     .comment.depth-4 {
-      border-left-color: #9C27B0;
-      margin-left: 80px;
+      margin-left: 40px;
+    }
+
+    .comment.depth-4::before {
+      background-color: #ccc;
     }
 
     .comment-author {
-      font-weight: 700;
-      color: #4CAF50;
-      margin-bottom: 5px;
+      font-weight: 600;
+      color: #0066cc;
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
+      font-size: 1em;
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .comments-header {
+      display: flex;
+      align-items: center;
     }
 
     .comment-score {
-      background-color: #4CAF50;
-      color: white;
+      background-color: #f0f0f0;
+      color: #666;
       padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 0.75em;
-      font-weight: 600;
+      border-radius: 8px;
+      font-size: 0.85em;
+      font-weight: 500;
+      border: 1px solid #e0e0e0;
     }
 
     .comment-meta {
       font-size: 0.85em;
-      color: #888;
-      margin-bottom: 10px;
+      color: #999;
+      margin-bottom: 6px;
     }
 
     .comment-body {
@@ -274,74 +322,141 @@
       white-space: pre-wrap;
       word-wrap: break-word;
       line-height: 1.5;
-    }
-
-    .depth-indicator {
-      display: inline-block;
-      background-color: rgba(0,0,0,0.1);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.75em;
-      font-weight: 600;
+      font-size: 1em;
     }
 
     @media (max-width: 768px) {
       .container {
-        padding: 10px;
+        padding: 12px;
       }
 
       .header h1 {
-        font-size: 1.8em;
+        font-size: 1.3em;
       }
 
       .post {
-        padding: 15px;
+        padding: 12px;
       }
 
       .post-title {
-        font-size: 1.3em;
+        font-size: 1em;
       }
 
       .comment.depth-1,
       .comment.depth-2,
       .comment.depth-3,
       .comment.depth-4 {
-        margin-left: 15px;
+        margin-left: 12px;
       }
     }
 
     .refresh-btn {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 1em;
-      font-weight: 600;
+      background: white;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: 500;
       cursor: pointer;
-      transition: transform 0.2s;
-      margin-top: 10px;
+      transition: all 0.15s;
+      margin-top: 8px;
     }
 
     .refresh-btn:hover {
-      transform: scale(1.05);
+      background-color: #f5f5f5;
+      border-color: #d0d0d0;
     }
 
     .refresh-btn:active {
-      transform: scale(0.95);
+      background-color: #eee;
+    }
+
+    .post-nav {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .post-nav-header {
+      font-size: 0.95em;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .post-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .post-nav-item {
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      text-decoration: none;
+      color: #0066cc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.15s;
+    }
+
+    .post-nav-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .post-nav-score {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .collapse-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 0.9em;
+      cursor: pointer;
+      color: #999;
+      font-weight: normal;
+      transition: all 0.15s;
+      margin-right: 6px;
+      display: inline-block;
+      width: 16px;
+      text-align: center;
+      user-select: none;
+    }
+
+    .collapse-btn:hover {
+      color: #333;
+    }
+
+    .collapsible-content {
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .collapsible-content.collapsed {
+      max-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🚀 Reddit Posts Viewer</h1>
-      <div class="subtitle">Real-time Reddit data with comments and replies</div>
-      <button class="refresh-btn" onclick="fetchData()">🔄 Refresh Data</button>
+      <h1>Reddit Posts Viewer</h1>
+      <div class="subtitle" id="subtitle">Real-time Reddit data with comments and replies</div>
+      <button class="refresh-btn" onclick="fetchData()">Refresh</button>
     </div>
 
     <div id="loading" class="loading">
-      <div>⏳ Loading Reddit posts...</div>
+      <div>Loading...</div>
     </div>
 
     <div id="error" class="error" style="display: none;"></div>
@@ -350,12 +465,60 @@
   </div>
 
   <script>
-    const API_URL = 'https://helper.lnservice.online/api/v1/reddit/fetch?subreddit=ClaudeAI&apiKey=secret&topPostsCount=25&maxComments=100&minimumCommentScore=1';
+    // Parse URL parameters
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+
+      // Required parameter
+      const subreddit = params.get('subreddit') || params.get('channel');
+
+      if (!subreddit) {
+        throw new Error('Required parameter missing: subreddit (or channel)');
+      }
+
+      // Optional parameters with defaults
+      const apiKey = params.get('apiKey') || 'secret';
+      const topPostsCount = params.get('topPostsCount') || '25';
+      const maxComments = params.get('maxComments') || '100';
+      const minimumCommentScore = params.get('minimumCommentScore') || '1';
+
+      return {
+        subreddit,
+        apiKey,
+        topPostsCount,
+        maxComments,
+        minimumCommentScore
+      };
+    }
+
+    // Build API URL from parameters
+    function buildApiUrl() {
+      const params = getUrlParams();
+      const baseUrl = 'http://helper.lnservice.online/api/v1/reddit/fetch';
+
+      return `${baseUrl}?subreddit=${encodeURIComponent(params.subreddit)}&apiKey=${encodeURIComponent(params.apiKey)}&topPostsCount=${params.topPostsCount}&maxComments=${params.maxComments}&minimumCommentScore=${params.minimumCommentScore}`;
+    }
 
     function escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
+    }
+
+    function toggleCollapse(elementId) {
+      const element = document.getElementById(elementId);
+      const button = document.querySelector(`[onclick="toggleCollapse('${elementId}')"]`);
+
+      if (element.classList.contains('collapsed')) {
+        element.classList.remove('collapsed');
+        element.style.maxHeight = element.scrollHeight + 'px';
+        if (button) button.textContent = '▼';
+      } else {
+        element.style.maxHeight = element.scrollHeight + 'px';
+        element.offsetHeight; // Force reflow
+        element.classList.add('collapsed');
+        if (button) button.textContent = '►';
+      }
     }
 
     function formatDate(dateString) {
@@ -369,87 +532,46 @@
       });
     }
 
+    let commentCounter = 0;
+
     function renderComment(comment, depth = 0) {
       const depthClass = `depth-${Math.min(depth, 4)}`;
-      const depthIndicator = depth > 0 ? `<span class="depth-indicator">↳ Reply ${depth}</span>` : '';
+      const hasReplies = comment.replies && comment.replies.length > 0;
+      const commentId = `comment-${commentCounter++}`;
+      const repliesId = `${commentId}-replies`;
 
       let html = `
         <div class="comment ${depthClass}">
-          <div class="comment-author">
-            <span>👤 u/${escapeHtml(comment.author)}</span>
-            <span class="comment-score">⬆ ${comment.score}</span>
-            ${depthIndicator}
+          <div class="comment-header">
+      `;
+
+      // Add collapse button if there are replies
+      if (hasReplies) {
+        html += `<button class="collapse-btn" onclick="toggleCollapse('${repliesId}')">▼</button>`;
+      } else {
+        html += `<span style="width: 16px; display: inline-block;"></span>`;
+      }
+
+      html += `
+            <div style="flex: 1;">
+              <div class="comment-author">
+                <span>u/${escapeHtml(comment.author)}</span>
+                <span class="comment-score">${comment.score} score</span>
+              </div>
+              <div class="comment-meta">
+                ${formatDate(comment.created)}
+              </div>
+              <div class="comment-body">${escapeHtml(comment.body)}</div>
+            </div>
           </div>
-          <div class="comment-meta">
-            📅 ${formatDate(comment.created)}
-          </div>
-          <div class="comment-body">${escapeHtml(comment.body)}</div>
-        </div>
       `;
 
       // Recursively render replies
-      if (comment.replies && comment.replies.length > 0) {
+      if (hasReplies) {
+        html += `<div class="collapsible-content" id="${repliesId}" style="max-height: 100000px;">`;
         comment.replies.forEach(reply => {
           html += renderComment(reply, depth + 1);
         });
-      }
-
-      return html;
-    }
-
-    function renderPost(post, index) {
-      const hasText = post.selftext && post.selftext.trim();
-      const hasComments = post.comments && post.comments.length > 0;
-
-      let html = `
-        <div class="post">
-          <div class="post-header">
-            <div class="post-title">
-              ${index + 1}. <a href="${post.url}" target="_blank">${escapeHtml(post.title)}</a>
-            </div>
-            <div class="post-meta">
-              <div class="meta-item">
-                <span class="score-badge">⬆ ${post.score} points</span>
-              </div>
-              <div class="meta-item">
-                <span>👤 <span class="author">u/${escapeHtml(post.author)}</span></span>
-              </div>
-              <div class="meta-item">
-                💬 ${post.numComments} comments
-              </div>
-              <div class="meta-item">
-                📅 ${formatDate(post.created)}
-              </div>
-            </div>
-          </div>
-
-          <div class="post-links">
-            <a href="${post.url}" target="_blank" class="post-link">🔗 View Content</a>
-            <a href="https://reddit.com${post.permalink}" target="_blank" class="post-link">💬 Reddit Thread</a>
-          </div>
-      `;
-
-      if (hasText) {
-        html += `
-          <div class="post-text">
-            ${escapeHtml(post.selftext)}
-          </div>
-        `;
-      }
-
-      if (hasComments) {
-        html += `
-          <div class="comments-section">
-            <div class="comments-header">
-              💬 Comments
-              <span class="comment-count">${post.comments.length}</span>
-            </div>
-        `;
-
-        post.comments.forEach(comment => {
-          html += renderComment(comment, 0);
-        });
-
         html += `</div>`;
       }
 
@@ -457,8 +579,83 @@
       return html;
     }
 
+    function renderPost(post, index) {
+      const hasText = post.selftext && post.selftext.trim();
+      const hasComments = post.comments && post.comments.length > 0;
+      const postId = `post-${index}`;
+      const commentsId = `comments-${index}`;
+
+      let html = `
+        <div class="post" id="${postId}">
+          <div class="post-header">
+            <div class="post-title">
+              <button class="collapse-btn" onclick="toggleCollapse('${postId}-content')">▼</button>
+              <div class="post-title-text">
+                ${index + 1}. <a href="${post.url}" target="_blank">${escapeHtml(post.title)}</a>
+              </div>
+            </div>
+            <div class="post-meta">
+              <div class="meta-item">
+                <span class="score-badge">${post.score} pts</span>
+              </div>
+              <div class="meta-item">
+                <span class="author">u/${escapeHtml(post.author)}</span>
+              </div>
+              <div class="meta-item">
+                ${post.numComments} comments
+              </div>
+              <div class="meta-item">
+                ${formatDate(post.created)}
+              </div>
+            </div>
+          </div>
+
+          <div class="collapsible-content" id="${postId}-content" style="max-height: 100000px;">
+            <div class="post-links">
+              <a href="${post.url}" target="_blank" class="post-link">View content</a>
+              <a href="https://reddit.com${post.permalink}" target="_blank" class="post-link">Reddit</a>
+            </div>
+      `;
+
+      if (hasText) {
+        html += `
+            <div class="post-text">
+              ${escapeHtml(post.selftext)}
+            </div>
+        `;
+      }
+
+      if (hasComments) {
+        html += `
+            <div class="comments-section">
+              <div class="comments-header">
+                <button class="collapse-btn" onclick="toggleCollapse('${commentsId}')">▼</button>
+                Comments
+                <span class="comment-count">${post.comments.length}</span>
+              </div>
+              <div class="collapsible-content" id="${commentsId}" style="max-height: 100000px;">
+        `;
+
+        post.comments.forEach(comment => {
+          html += renderComment(comment, 0);
+        });
+
+        html += `
+              </div>
+            </div>
+        `;
+      }
+
+      html += `
+          </div>
+        </div>
+      `;
+      return html;
+    }
+
     function renderData(data) {
       const contentDiv = document.getElementById('content');
+      commentCounter = 0; // Reset counter for each render
 
       let html = `
         <div class="header">
@@ -486,8 +683,27 @@
             </div>
             <div class="stat-card">
               <div class="stat-label">Source</div>
-              <div class="stat-value">${data.fromCache ? '💾 Cache' : '🔥 Fresh'}</div>
+              <div class="stat-value">${data.fromCache ? 'Cache' : 'Fresh'}</div>
             </div>
+          </div>
+        </div>
+
+        <div class="post-nav">
+          <div class="post-nav-header">Posts Navigation</div>
+          <div class="post-nav-list">
+      `;
+
+      data.posts.forEach((post, index) => {
+        html += `
+            <a href="#post-${index}" class="post-nav-item">
+              <span>${index + 1}.</span>
+              <span style="flex: 1;">${escapeHtml(post.title)}</span>
+              <span class="post-nav-score">${post.score} pts</span>
+            </a>
+        `;
+      });
+
+      html += `
           </div>
         </div>
       `;
@@ -504,13 +720,17 @@
       const errorDiv = document.getElementById('error');
       const contentDiv = document.getElementById('content');
 
+      // Update subtitle
+      updateSubtitle();
+
       // Show loading
       loadingDiv.style.display = 'block';
       errorDiv.style.display = 'none';
       contentDiv.innerHTML = '';
 
       try {
-        const response = await fetch(API_URL);
+        const apiUrl = buildApiUrl();
+        const response = await fetch(apiUrl);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -529,18 +749,48 @@
       } catch (error) {
         loadingDiv.style.display = 'none';
         errorDiv.style.display = 'block';
+
+        let errorMessage = escapeHtml(error.message);
+
+        // Check if it's a parameter error
+        if (error.message.includes('Required parameter')) {
+          errorMessage += `<br><br><strong>Usage:</strong> Add ?subreddit=SUBREDDIT_NAME to the URL<br>Example: ?subreddit=ClaudeAI&maxComments=50`;
+        }
+
         errorDiv.innerHTML = `
-          <strong>❌ Error loading data:</strong><br>
-          ${escapeHtml(error.message)}
+          <strong>Error:</strong> ${errorMessage}
           <br><br>
-          <button class="refresh-btn" onclick="fetchData()">🔄 Try Again</button>
+          <button class="refresh-btn" onclick="location.reload()">Reload</button>
         `;
         console.error('Error fetching data:', error);
       }
     }
 
-    // Fetch data on page load
-    fetchData();
+    // Update subtitle with current parameters
+    function updateSubtitle() {
+      try {
+        const params = getUrlParams();
+        const subtitle = document.getElementById('subtitle');
+        subtitle.textContent = `r/${params.subreddit} · ${params.topPostsCount} posts · ${params.maxComments} comments · min score ${params.minimumCommentScore}`;
+      } catch (error) {
+        // If params are invalid, don't update subtitle
+      }
+    }
+
+    // Initialize on page load
+    try {
+      updateSubtitle();
+      fetchData();
+    } catch (error) {
+      const errorDiv = document.getElementById('error');
+      const loadingDiv = document.getElementById('loading');
+      loadingDiv.style.display = 'none';
+      errorDiv.style.display = 'block';
+      errorDiv.innerHTML = `
+        <strong>Error:</strong> ${escapeHtml(error.message)}
+        <br><br>Add ?subreddit=SUBREDDIT_NAME to the URL
+      `;
+    }
   </script>
 </body>
 </html>
