@@ -494,7 +494,7 @@
     // Build API URL from parameters
     function buildApiUrl() {
       const params = getUrlParams();
-      const baseUrl = 'http://helper.lnservice.online/api/v1/reddit/fetch';
+      const baseUrl = 'https://helper.lnservice.online/api/v1/reddit/fetch';
 
       return `${baseUrl}?subreddit=${encodeURIComponent(params.subreddit)}&apiKey=${encodeURIComponent(params.apiKey)}&topPostsCount=${params.topPostsCount}&maxComments=${params.maxComments}&minimumCommentScore=${params.minimumCommentScore}`;
     }
